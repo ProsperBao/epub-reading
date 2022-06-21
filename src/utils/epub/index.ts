@@ -1,2 +1,2 @@
-export * from './loadToDom'
+export * from './loadFile'
 export * from './handle'

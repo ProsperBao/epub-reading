@@ -20,8 +20,9 @@ export function useEpubOperate() {
   watch(() => data.value, (n) => {
     epub(n as ArrayBuffer).opened.then((res) => {
       book.value = res
+      console.log(res)
       catalog.value = res.navigation.toc
-      loadEpub(res, res.navigation.toc[0].href)
+      loadEpub(res, 'Text/cover_page.xhtml')
     })
   })
 

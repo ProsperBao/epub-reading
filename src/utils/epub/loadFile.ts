@@ -6,7 +6,7 @@ import type JSZip from 'jszip'
  */
 export function loadToDom(book: Book, path: string): Promise<Document> {
   return new Promise((resolve, reject) => {
-    const exec = () => loadStringByPath(book, path).then((str: string) => {
+    const exec = () => loadFileByPath(book, path).then((str: string) => {
       const parser = new DOMParser()
       resolve(parser.parseFromString(str, 'text/xml'))
     }).catch(reject)
@@ -20,6 +20,7 @@ export type ExBooK = Book & {
   }
 }
 
-export function loadStringByPath(book: Book, path: string): Promise<string> {
-  return (book as ExBooK).archive.zip.files[`OEBPS/${path}`].async('string')
+export function loadFileByPath(book: Book, path: string, type: 'string' | 'base64' = 'string'): Promise<string> {
+  return (book as ExBooK).archive.zip.files[`OEBPS/${path}`].async(type)
 }
+
