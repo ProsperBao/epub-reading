@@ -1,20 +1,34 @@
-import { loadAsync } from 'jszip'
+import type { Book, NavItem } from 'epubjs'
+import epub from 'epubjs'
+import { handle, loadToDom } from '~/utils/epub'
 
 export function useEpubOperate() {
-  const book = ref<null>(null)
+  const book = ref<Book | null>(null)
+  const catalog = ref<NavItem[] | null>()
+  const html = ref<string>('')
   const { open, data } = useFileSystemAccess({
-    dataType: 'Blob',
+    dataType: 'ArrayBuffer',
   })
+
+  const loadEpub = async (b: Book, path: string) => {
+    const doc: Document = await loadToDom(b, path)
+    const res = await handle(b, doc)
+    html.value = res.doc
+  }
 
   // 读取文件
   watch(() => data.value, (n) => {
-    loadAsync(n as Blob).then((zip) => {
-      zip.files['OEBPS/Text/part0023.xhtml'].async('string').then(res => console.log(res))
+    epub(n as ArrayBuffer).opened.then((res) => {
+      book.value = res
+      catalog.value = res.navigation.toc
+      loadEpub(res, res.navigation.toc[0].href)
     })
   })
 
   return {
     // 只有未打开过的才可以打开
-    readEpub: () => !book.value && open(),
+    open: () => !book.value && open(),
+    catalog,
+    html,
   }
 }

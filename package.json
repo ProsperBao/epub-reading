@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@vueuse/core": "^8.6.0",
+    "epubjs": "^0.3.93",
     "jszip": "^3.10.0",
     "vue": "^3.2.37",
     "vue-router": "^4.0.16"
@@ -25,6 +26,8 @@
     "eslint": "^8.17.0",
     "jsdom": "^19.0.0",
     "pnpm": "^7.2.1",
+    "postcss": "^8.4.14",
+    "postcss-nested": "^5.0.6",
     "typescript": "^4.7.3",
     "unocss": "^0.39.0",
     "unplugin-auto-import": "^0.8.8",
@@ -36,5 +39,10 @@
   },
   "eslintConfig": {
     "extends": "@antfu"
+  },
+  "postcss": {
+    "plugins": {
+      "postcss-nesting": {}
+    }
   }
 }
