@@ -1,14 +1,14 @@
 import { defineStore } from 'pinia'
 import { cloneDeep } from 'lodash'
 
-export type TranslateRecord = Record<string, {
+export type TranslateHistory = Record<string, {
   date: string
   translate: string
 }>
 
 // 翻译记录
-export const useRecordStore = defineStore('record', () => {
-  const record = useLocalStorage<TranslateRecord>('config-record', {})
+export const useHistoryStore = defineStore('history', () => {
+  const record = useLocalStorage<TranslateHistory>('config-history-record', {})
 
   // 过滤 record 中的过期数据
   const processExpire = () => {

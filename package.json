@@ -11,13 +11,13 @@
   },
   "dependencies": {
     "@types/lodash": "^4.14.182",
-    "@types/object-hash": "^2.2.1",
+    "@types/md5": "^2.3.2",
     "@vueuse/core": "^8.6.0",
     "epubjs": "^0.3.93",
     "fetch-jsonp": "^1.2.1",
     "jszip": "^3.10.0",
     "lodash": "^4.17.21",
-    "object-hash": "^3.0.0",
+    "md5": "^2.3.0",
     "pinia": "^2.0.14",
     "vue": "^3.2.37",
     "vue-router": "^4.0.16"

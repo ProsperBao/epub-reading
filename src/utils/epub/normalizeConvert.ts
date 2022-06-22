@@ -1,8 +1,8 @@
 import type { Book } from 'epubjs'
-import hash from 'object-hash'
+import md5 from 'md5'
 import { pipeline } from '../pipeline'
 import { extractResource } from './extractResource'
-import type { TranslateHistory } from '~/composables/useReadConfig'
+import { useHistoryStore } from '~/stores'
 
 // 规范化文本中的所有图片标签
 export async function normalizePicture(book: Book, doc: Document): Promise<[Book, Document]> {
@@ -36,22 +36,23 @@ export async function normalizeStringify(_: Book, doc: Document): Promise<Normal
   const h1 = doc.querySelector('h1')
   if (h1) {
     const text = h1.textContent || ''
-    stringify.push({ origin: text, hash: hash.MD5(text).substring(0, 20) })
+    stringify.push({ origin: text, hash: md5(text).substring(0, 20) })
     h1.remove()
   }
 
   const p = doc.querySelectorAll('.main > p')
   for (const el of Array.from(p)) {
     const text = el.innerHTML.replace(/ xmlns="[^"]+"/g, '')
-    stringify.push({ origin: text, hash: hash.MD5(text).substring(0, 20) })
+    stringify.push({ origin: text, hash: md5(text).substring(0, 20) })
   }
 
   return stringify
 }
 
 // 把标准化字符串和翻译历史记录合并
-export async function merageNormalizeStringify(stringify: NormalizeStringify[], translateHistory: TranslateHistory): Promise<NormalizeStringify[]> {
-  return stringify.map(item => ({ ...item, ...translateHistory[item.hash] }))
+export async function merageNormalizeStringify(stringify: NormalizeStringify[]): Promise<NormalizeStringify[]> {
+  const history = useHistoryStore()
+  return stringify.map(item => ({ ...item, ...history.record[item.hash] }))
 }
 
 // 处理结果
@@ -59,7 +60,7 @@ export interface NormalizeResult {
   content: NormalizeStringify[]
 }
 
-export async function normalizeConvert(book: Book, doc: Document, translateHistory: TranslateHistory): Promise<NormalizeResult> {
+export async function normalizeConvert(book: Book, doc: Document): Promise<NormalizeResult> {
   const res = await pipeline(
     [book, doc],
     normalizePicture,
@@ -67,6 +68,6 @@ export async function normalizeConvert(book: Book, doc: Document, translateHisto
   )
 
   return {
-    content: await merageNormalizeStringify(res, translateHistory),
+    content: await merageNormalizeStringify(res),
   }
 }
