@@ -1,2 +1,2 @@
-export * from './loadFile'
-export * from './handle'
+export * from './extractResource'
+export * from './normalizeConvert'

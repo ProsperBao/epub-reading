@@ -1,6 +1,6 @@
 import type { Book, NavItem } from 'epubjs'
 import epub from 'epubjs'
-import { handle, loadToDom } from '~/utils/epub'
+import { extractConvert2Dom, normalizeConvert } from '~/utils/epub'
 
 export function useEpubOperate() {
   const book = ref<Book | null>(null)
@@ -11,18 +11,15 @@ export function useEpubOperate() {
   })
 
   const loadEpub = async (b: Book, path: string) => {
-    const doc: Document = await loadToDom(b, path)
-    const res = await handle(b, doc)
-    html.value = res.doc
+    const doc: Document = await extractConvert2Dom(b, path)
+    await normalizeConvert(b, doc)
   }
 
   // 读取文件
   watch(() => data.value, (n) => {
     epub(n as ArrayBuffer).opened.then((res) => {
       book.value = res
-      console.log(res)
-      catalog.value = res.navigation.toc
-      loadEpub(res, 'Text/cover_page.xhtml')
+      loadEpub(res, 'Text/part0011.xhtml')
     })
   })
 
