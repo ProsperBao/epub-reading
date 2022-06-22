@@ -1,30 +1,23 @@
 <script setup lang="ts">
 import { useEpubOperate } from '~/composables/useEpubOperate'
+import { translate } from '~/utils/translate'
 
 const { open, html } = useEpubOperate()
+
+translate()
 </script>
 
 <template>
   <div>
-    <button @click="open">
-      Click
+    <button v-if="!html.length" fixed left-0 top-0 w-full h-full bg="" @click="open">
+      点击打开
     </button>
-    <div class="text-wrap" v-html="html" />
   </div>
 </template>
 
 <style lang="postcss">
 .text-wrap {
   line-height: 30px;
-
-  .top-mark {
-    position: relative;
-  }
-
-  .top-mark::after {
-    content: attr(data-mark);
-    white-space: nowrap;
-  }
 
   p {
     text-indent: 2em;
