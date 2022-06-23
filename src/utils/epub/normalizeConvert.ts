@@ -33,13 +33,6 @@ export interface NormalizeStringify {
 export async function normalizeStringify(_: Book, doc: Document): Promise<NormalizeStringify[]> {
   const stringify: NormalizeStringify[] = []
 
-  const h1 = doc.querySelector('h1')
-  if (h1) {
-    const text = h1.textContent || ''
-    stringify.push({ origin: text, hash: md5(text).substring(0, 20) })
-    h1.remove()
-  }
-
   const p = doc.querySelectorAll('.main > p')
   for (const el of Array.from(p)) {
     const text = el.innerHTML.replace(/ xmlns="[^"]+"/g, '')
