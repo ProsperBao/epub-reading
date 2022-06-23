@@ -20,7 +20,8 @@
     "md5": "^2.3.0",
     "pinia": "^2.0.14",
     "vue": "^3.2.37",
-    "vue-router": "^4.0.16"
+    "vue-router": "^4.0.16",
+    "vue-starport": "^0.3.0"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^0.25.1",

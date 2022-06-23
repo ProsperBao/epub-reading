@@ -30,6 +30,7 @@ specifiers:
   vitest: ^0.14.2
   vue: ^3.2.37
   vue-router: ^4.0.16
+  vue-starport: ^0.3.0
   vue-tsc: ^0.37.7
 
 dependencies:
@@ -44,6 +45,7 @@ dependencies:
   pinia: 2.0.14_typescript@4.7.3+vue@3.2.37
   vue: 3.2.37
   vue-router: 4.0.16_vue@3.2.37
+  vue-starport: 0.3.0
 
 devDependencies:
   '@antfu/eslint-config': 0.25.1_eslint@8.17.0+typescript@4.7.3
@@ -4110,6 +4112,15 @@ packages:
     dependencies:
       '@vue/devtools-api': 6.0.13
       vue: 3.2.37
+    dev: false
+
+  /vue-starport/0.3.0:
+    resolution: {integrity: sha512-CfwYVxJDFqj7zoDw0TAMdNdpefuTdUH3rtupsadSa1je5Z7S/XwUCdxN0vVjBEEvWh33HmqjdK0IRQMWDlV7VQ==}
+    dependencies:
+      '@vueuse/core': 8.6.0_vue@3.2.37
+      vue: 3.2.37
+    transitivePeerDependencies:
+      - '@vue/composition-api'
     dev: false
 
   /vue-tsc/0.37.7_typescript@4.7.3:
