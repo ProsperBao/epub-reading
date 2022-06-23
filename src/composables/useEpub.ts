@@ -4,7 +4,7 @@ import type { Ref } from 'vue'
 import type { NormalizeStringify } from '~/utils/epub'
 import { extractConvert2Dom, normalizeConvert } from '~/utils/epub'
 
-export function useEpub(epubData: Ref<ArrayBuffer | undefined>) {
+export function useEpub(epubData: Ref<ArrayBuffer | null>) {
   const book = ref<Book | null>(null)
   const html = ref<NormalizeStringify[]>([])
 
