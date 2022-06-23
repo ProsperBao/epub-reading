@@ -33,7 +33,8 @@ export interface NormalizeStringify {
 export async function normalizeStringify(_: Book, doc: Document): Promise<NormalizeStringify[]> {
   const stringify: NormalizeStringify[] = []
 
-  const p = doc.querySelectorAll('.main > p')
+  const p = doc.querySelectorAll('.main > *')
+  // TODO: 图片
   for (const el of Array.from(p)) {
     const text = el.innerHTML.replace(/ xmlns="[^"]+"/g, '')
     stringify.push({ origin: text, hash: MD5(text).toString().substring(0, 20) })

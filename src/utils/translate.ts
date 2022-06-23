@@ -69,7 +69,7 @@ export function requestYoudaoTranslate(content: string): Promise<string> {
   params.sign = SHA256(appKey + truncate(content) + params.salt + params.curtime + key).toString(enc.Hex)
   return fetchJsonp(`http://openapi.youdao.com/api?${Object.keys(params).map(key => `${key}=${params[key]}`).join('&')}`)
     .then(respone => respone.json())
-    .then(result => result.trans_result[0].dst)
+    .then(result => result.translation[0])
 }
 
 // 请求谷歌翻译

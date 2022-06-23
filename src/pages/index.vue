@@ -3,10 +3,11 @@ import { useEpub } from '~/composables/useEpub'
 import { useFileSelect } from '~/composables/useFileSelect'
 
 const [control, toggleControl] = useToggle(false)
+const [sidebar, toggleSidebar] = useToggle(false)
 
 const { open, data } = useFileSelect()
 
-const { html } = useEpub(data)
+const { html, catalog, goto, navs } = useEpub(data)
 </script>
 
 <template>
@@ -21,9 +22,16 @@ const { html } = useEpub(data)
         @click="() => toggleControl()"
       />
     </section>
+    <section fixed b="0.5" p-y-1 p-x-1 b-rd-r-5 left="-1" top-10 opacity="50" text="#A2A2A2" bg-white>
+      <div
+        i-carbon:catalog text-sm
+        @click="() => toggleSidebar()"
+      />
+    </section>
 
     <content-wrap :content="html" />
 
     <Footer :control="control" @toggle="toggleControl" />
+    <Sidebar :catalog="catalog" :navs="navs" :sidebar="sidebar" @toggle="toggleSidebar" @goto="goto" />
   </div>
 </template>

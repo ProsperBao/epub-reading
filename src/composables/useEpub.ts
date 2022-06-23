@@ -8,15 +8,27 @@ import { extractConvert2Dom, normalizeConvert } from '~/utils/epub'
 export function useEpub(epubData: Ref<ArrayBuffer | null>) {
   const book = ref<Book | null>(null)
   const html = ref<NormalizeStringify[]>([])
+  const catalog = ref<string[]>([])
+  const navs = ref<string[]>([])
   const { record } = useHistoryStore()
+
+  const goto = async (path: string) => {
+    if (book.value) {
+      const doc: Document = await extractConvert2Dom(book.value as Book, path)
+      console.log(doc)
+      html.value = (await normalizeConvert(book.value as Book, doc)).content
+      console.log(html.value)
+    }
+  }
 
   // 加载 epub 文件
   const loadEpubFile = async (n: ArrayBuffer) => {
     const res = await epub(n as ArrayBuffer).opened
     // 保存数据以便后续加载
     book.value = res
-    const doc: Document = await extractConvert2Dom(res, 'Text/part0011.xhtml')
-    html.value = (await normalizeConvert(res, doc)).content
+    navs.value = res.navigation.toc.map(item => item.href)
+    catalog.value = (res.resources as any).html.map((i: { href: string }) => i.href)
+    goto('Text/part0011.xhtml')
   }
 
   watch(() => epubData.value, n => n && loadEpubFile(n))
@@ -27,5 +39,8 @@ export function useEpub(epubData: Ref<ArrayBuffer | null>) {
         return []
       return html.value.map(i => ({ ...i, translate: record[i.hash]?.translate || i.translate }))
     }),
+    catalog,
+    goto,
+    navs,
   }
 }
