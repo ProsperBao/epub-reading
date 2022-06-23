@@ -1,5 +1,5 @@
 import type { Book } from 'epubjs'
-import md5 from 'md5'
+import MD5 from 'crypto-js/md5'
 import { pipeline } from '../pipeline'
 import { extractResource } from './extractResource'
 import { useHistoryStore } from '~/stores'
@@ -35,9 +35,8 @@ export async function normalizeStringify(_: Book, doc: Document): Promise<Normal
 
   const p = doc.querySelectorAll('.main > p')
   for (const el of Array.from(p)) {
-    let text = el.innerHTML.replace(/ xmlns="[^"]+"/g, '')
-    text = text.replace(/「([^」]+)」/g, ' "$1" ')
-    stringify.push({ origin: text, hash: md5(text).substring(0, 20) })
+    const text = el.innerHTML.replace(/ xmlns="[^"]+"/g, '')
+    stringify.push({ origin: text, hash: MD5(text).toString().substring(0, 20) })
   }
 
   return stringify
