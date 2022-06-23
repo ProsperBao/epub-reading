@@ -15,9 +15,7 @@ export function useEpub(epubData: Ref<ArrayBuffer | null>) {
   const goto = async (path: string) => {
     if (book.value) {
       const doc: Document = await extractConvert2Dom(book.value as Book, path)
-      console.log(doc)
       html.value = (await normalizeConvert(book.value as Book, doc)).content
-      console.log(html.value)
     }
   }
 

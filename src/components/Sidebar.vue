@@ -14,8 +14,9 @@ defineEmits(['toggle', 'goto'])
   />
   <aside
     fixed h-full p-x-2 text-left left-0 top-0 transform :translate-x="`${sidebar ? '0' : '-100%'}`"
-    :opacity="`${sidebar ? '100' : '0'}`" z-9 p-t-3 p-b-1 transition-all-300 shadow shadow-current flex justify-around
-    bg-white dark:bg-hex-121212 z-2 overflow-y-scroll
+    :opacity="`${sidebar ? '100' : '0'}`" z-9 v-if="catalog.length > 0" p-t-3 p-b-1 transition-all-300 shadow shadow-current flex
+    justify-around bg-white dark:bg-hex-121212 z-2
+    overflow-y-scroll
   >
     <ul>
       <li v-for="(item, idx) in catalog" :key="idx" p-y-2 flex items-center>

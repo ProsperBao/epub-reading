@@ -33,7 +33,14 @@ export interface NormalizeStringify {
 export async function normalizeStringify(_: Book, doc: Document): Promise<NormalizeStringify[]> {
   const stringify: NormalizeStringify[] = []
 
-  for (const el of Array.from(doc.body.children || [])) {
+  let children = Array.from(doc.querySelectorAll('.main'))
+  if (children.length > 0)
+    children = Array.from(children[0].children)
+
+  else
+    children = Array.from(doc.body.children)
+
+  for (const el of children) {
     // 跳过 h* 标签
     if (el.tagName.startsWith('h'))
       continue
