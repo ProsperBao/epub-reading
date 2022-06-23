@@ -14,6 +14,7 @@ export const useUniqueNounStore = defineStore('noun', () => ({
   list: useLocalStorage<UniqueNounList>('list', {
     本好きの下剋上: {
       ランプレヒト: '兰普雷特',
+      冬の主: '冬之主',
     },
   }),
 }))
