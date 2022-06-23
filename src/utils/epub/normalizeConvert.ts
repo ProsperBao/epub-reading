@@ -35,7 +35,8 @@ export async function normalizeStringify(_: Book, doc: Document): Promise<Normal
 
   const p = doc.querySelectorAll('.main > p')
   for (const el of Array.from(p)) {
-    const text = el.innerHTML.replace(/ xmlns="[^"]+"/g, '')
+    let text = el.innerHTML.replace(/ xmlns="[^"]+"/g, '')
+    text = text.replace(/「([^」]+)」/g, ' "$1" ')
     stringify.push({ origin: text, hash: md5(text).substring(0, 20) })
   }
 
@@ -64,3 +65,4 @@ export async function normalizeConvert(book: Book, doc: Document): Promise<Norma
     content: await merageNormalizeStringify(res),
   }
 }
+
