@@ -7,7 +7,7 @@ const [sidebar, toggleSidebar] = useToggle(false)
 
 const { open, data } = useFileSelect()
 
-const { html, catalog, goto, navs } = useEpub(data)
+const { html, catalog, goto, navs, current } = useEpub(data)
 </script>
 
 <template>
@@ -32,6 +32,6 @@ const { html, catalog, goto, navs } = useEpub(data)
     <content-wrap :content="html" />
 
     <Footer :control="control" @toggle="toggleControl" />
-    <Sidebar :catalog="catalog" :navs="navs" :sidebar="sidebar" @toggle="toggleSidebar" @goto="goto" />
+    <Sidebar :catalog="catalog" :current="current" :navs="navs" :sidebar="sidebar" @toggle="toggleSidebar" @goto="goto" />
   </div>
 </template>

@@ -104,13 +104,15 @@ const translateEngine: Record<TranslateEngine, any> = {
 
 // 转换翻译结果
 export async function translate(source: NormalizeStringify): Promise<TranslateHistory> {
+  if (source.translate)
+    return source
   const { use } = useTranslateStore()
   // 剔除注音标签
   let content = convertContent(source.origin)
   // 转换专有名词，并且返回专有名词对应的翻译
   content = convertUniqueNoun(content)
   if (!content)
-    return {}
+    return source
   // 拼装请求参数并且请求翻译
   content = await (translateEngine[use])(content)
   // 更新记录并返回数据

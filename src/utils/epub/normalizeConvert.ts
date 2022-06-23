@@ -46,14 +46,14 @@ export async function normalizeStringify(_: Book, doc: Document): Promise<Normal
       continue
     // 如果是图片标签则直接添加到文本中
     if (el.tagName === 'img') {
-      stringify.push({ origin: el.outerHTML, hash: MD5(el.outerHTML).toString() })
+      stringify.push({ origin: el.outerHTML, hash: MD5(el.outerHTML).toString().substring(0, 20) })
       continue
     }
     const text = el.innerHTML.replace(/ xmlns="[^"]+"/g, '')
     stringify.push({ origin: text, hash: MD5(text).toString().substring(0, 20) })
   }
 
-  return stringify
+  return stringify.filter(i => i.origin !== '<br />')
 }
 
 // 把标准化字符串和翻译历史记录合并
