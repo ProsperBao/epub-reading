@@ -33,9 +33,15 @@ export interface NormalizeStringify {
 export async function normalizeStringify(_: Book, doc: Document): Promise<NormalizeStringify[]> {
   const stringify: NormalizeStringify[] = []
 
-  const p = doc.querySelectorAll('.main > *')
-  // TODO: 图片
-  for (const el of Array.from(p)) {
+  for (const el of Array.from(doc.body.children || [])) {
+    // 跳过 h* 标签
+    if (el.tagName.startsWith('h'))
+      continue
+    // 如果是图片标签则直接添加到文本中
+    if (el.tagName === 'img') {
+      stringify.push({ origin: el.outerHTML, hash: MD5(el.outerHTML).toString() })
+      continue
+    }
     const text = el.innerHTML.replace(/ xmlns="[^"]+"/g, '')
     stringify.push({ origin: text, hash: MD5(text).toString().substring(0, 20) })
   }

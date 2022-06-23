@@ -109,6 +109,8 @@ export async function translate(source: NormalizeStringify): Promise<TranslateHi
   let content = convertContent(source.origin)
   // 转换专有名词，并且返回专有名词对应的翻译
   content = convertUniqueNoun(content)
+  if (!content)
+    return {}
   // 拼装请求参数并且请求翻译
   content = await (translateEngine[use])(content)
   // 更新记录并返回数据
