@@ -43,7 +43,7 @@ export function requestBaiduTranslate(content: string): Promise<string> {
     salt: `${+new Date()}`,
   }
   params.sign = MD5(params.appid + params.q + params.salt + secret).toString()
-  return fetchJsonp(`http://api.fanyi.baidu.com/api/trans/vip/translate?${Object.keys(params).map(key => `${key}=${params[key]}`).join('&')}`)
+  return fetchJsonp(`https://api.fanyi.baidu.com/api/trans/vip/translate?${Object.keys(params).map(key => `${key}=${params[key]}`).join('&')}`)
     .then(respone => respone.json())
     .then(result => result.trans_result[0].dst)
 }
@@ -67,7 +67,7 @@ export function requestYoudaoTranslate(content: string): Promise<string> {
     vocabId: '',
   }
   params.sign = SHA256(appKey + truncate(content) + params.salt + params.curtime + key).toString(enc.Hex)
-  return fetchJsonp(`http://openapi.youdao.com/api?${Object.keys(params).map(key => `${key}=${params[key]}`).join('&')}`)
+  return fetchJsonp(`https://openapi.youdao.com/api?${Object.keys(params).map(key => `${key}=${params[key]}`).join('&')}`)
     .then(respone => respone.json())
     .then(result => result.translation[0])
 }
