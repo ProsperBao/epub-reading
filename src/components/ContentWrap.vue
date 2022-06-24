@@ -10,7 +10,7 @@ defineEmits(['next'])
     <div text-left>
       <template v-for="line in content" :key="line.hash">
         <p mt-4 @click="translate(line)" v-html="line.origin" />
-        <p v-if="line.translate" opacity-5 text-sm mt-1>
+        <p v-if="line.translate" text-sm mt-1>
           {{ line.translate }}
         </p>
       </template>
