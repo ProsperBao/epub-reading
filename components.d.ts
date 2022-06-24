@@ -10,7 +10,6 @@ declare module '@vue/runtime-core' {
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     Sidebar: typeof import('./src/components/Sidebar.vue')['default']
-    Slider: typeof import('./src/components/Slider.vue')['default']
     Starport: typeof import('vue-starport')['Starport']
     StarportCarrier: typeof import('vue-starport')['StarportCarrier']
   }

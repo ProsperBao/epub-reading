@@ -7,7 +7,7 @@ const [sidebar, toggleSidebar] = useToggle(false)
 
 const { open, data } = useFileSelect()
 
-const { html, catalog, goto, navs } = useEpub(data)
+const { html, catalog, goto, navs, current } = useEpub(data)
 </script>
 
 <template>
@@ -16,13 +16,13 @@ const { html, catalog, goto, navs } = useEpub(data)
       点击打开
     </button>
 
-    <section fixed b="0.5" p-y-1 p-x-1 b-rd-r-5 left="-1" top-2 opacity="50" text="#A2A2A2" bg-white>
+    <section fixed b="0.5" p-y-1 p-x-1 b-rd-r-5 left="-1" top-2 opacity="20" text="#A2A2A2" bg-white>
       <div
         i-carbon:carbon text-sm
         @click="() => toggleControl()"
       />
     </section>
-    <section fixed b="0.5" p-y-1 p-x-1 b-rd-r-5 left="-1" top-10 opacity="50" text="#A2A2A2" bg-white>
+    <section v-if="catalog.length > 0" fixed b="0.5" p-y-1 p-x-1 b-rd-r-5 left="-1" top-10 opacity="20" text="#A2A2A2" bg-white>
       <div
         i-carbon:catalog text-sm
         @click="() => toggleSidebar()"
@@ -32,6 +32,6 @@ const { html, catalog, goto, navs } = useEpub(data)
     <content-wrap :content="html" />
 
     <Footer :control="control" @toggle="toggleControl" />
-    <Sidebar :catalog="catalog" :navs="navs" :sidebar="sidebar" @toggle="toggleSidebar" @goto="goto" />
+    <Sidebar :catalog="catalog" :current="current" :navs="navs" :sidebar="sidebar" @toggle="toggleSidebar" @goto="goto" />
   </div>
 </template>

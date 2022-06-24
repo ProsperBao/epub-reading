@@ -44,7 +44,7 @@ export function requestBaiduTranslate(content: string): Promise<string> {
     salt: `${+new Date()}`,
   }
   params.sign = MD5(params.appid + params.q + params.salt + secret).toString()
-  return fetchJsonp(`http://api.fanyi.baidu.com/api/trans/vip/translate?${Object.keys(params).map(key => `${key}=${params[key]}`).join('&')}`)
+  return fetchJsonp(`https://api.fanyi.baidu.com/api/trans/vip/translate?${Object.keys(params).map(key => `${key}=${params[key]}`).join('&')}`)
     .then(respone => respone.json())
     .then(result => result.trans_result[0].dst)
 }
@@ -68,7 +68,7 @@ export function requestYoudaoTranslate(content: string): Promise<string> {
     vocabId: '',
   }
   params.sign = SHA256(appKey + truncate(content) + params.salt + params.curtime + key).toString(enc.Hex)
-  return fetchJsonp(`http://openapi.youdao.com/api?${Object.keys(params).map(key => `${key}=${params[key]}`).join('&')}`)
+  return fetchJsonp(`https://openapi.youdao.com/api?${Object.keys(params).map(key => `${key}=${params[key]}`).join('&')}`)
     .then(respone => respone.json())
     .then(result => result.translation[0])
 }
@@ -114,11 +114,15 @@ const translateEngine: Record<TranslateEngine, any> = {
 // 转换翻译结果
 export async function translate(source: NormalizeStringify): Promise<TranslateHistory> {
   let nounMapping: string[] = []
+  if (source.translate)
+    return source
   const { use } = useTranslateStore()
   // 剔除注音标签
   let content = convertContent(source.origin)
   // 转换专有名词，并且返回专有名词对应的翻译
   ;[content, nounMapping] = convertUniqueNoun(content)
+  if (!content)
+    return source
   // 拼装请求参数并且请求翻译
   content = await (translateEngine[use])(content)
   // 恢复专有名词
