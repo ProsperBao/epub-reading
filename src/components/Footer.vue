@@ -1,21 +1,17 @@
 <script lang="ts" setup>
 import { toggleDark } from '~/composables/dark'
-const [control, toggleControl] = useToggle(false)
-const footerRef = ref(null)
-onClickOutside(footerRef, (e) => {
-  e.stopPropagation()
-  toggleControl()
-})
+import { useToggleOutside } from '~/composables/useToggleOutside'
+const { open, targetRef, toggleOpen } = useToggleOutside()
 </script>
 
 <template>
   <section fixed b="0.5" p-y-1 p-x-1 b-rd-r-5 left="-1" top-2 opacity="20" text="#A2A2A2" bg-white>
-    <div i-carbon:carbon text-sm @click="() => toggleControl()" />
+    <div i-carbon:carbon text-sm @click="() => toggleOpen()" />
   </section>
   <Transition>
     <footer
-      v-if="control" ref="footerRef" fixed w-full left-0 bottom-0 transform :translate-y="`${control ? '0' : '100%'}`"
-      :opacity="`${control ? '100' : '0'}`" z-9 p-t-3 p-b-1 transition-all-300 shadow shadow-current flex
+      v-if="open" ref="targetRef" fixed w-full left-0 bottom-0
+      z-9 p-t-3 p-b-1 transition-all-300 shadow shadow-current flex
       justify-around bg-white dark:bg-hex-121212 z-2
     >
       <span class="icon-btn" text-center>
