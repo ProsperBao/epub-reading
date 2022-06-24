@@ -23,13 +23,14 @@ export function convertUniqueNoun(content: string): [string, string[]] {
     const uniqueNoun = list[dict]
     if (uniqueNoun) {
       for (const key in uniqueNoun) {
-        const index = nounMapping.length
-        nounMapping.push(uniqueNoun[key])
-        text = text.replace(new RegExp(key, 'g'), `(-${index}-)`)
+        if ((new RegExp(key, 'g')).test(text)) {
+          const index = nounMapping.length
+          nounMapping.push(uniqueNoun[key])
+          text = text.replace(new RegExp(key, 'g'), `~${index}~`)
+        }
       }
     }
   }
-
   return [text, nounMapping]
 }
 
@@ -88,7 +89,7 @@ export function requestMicrosoftTranslate(): Promise<string> {
 export function recoveryUniqueNoun(content: string, nounMapping: string[]): string {
   let text = content
   for (let i = 0; i < nounMapping.length; i++)
-    text = text.replace(new RegExp(`(-${i}-)`, 'g'), nounMapping[i])
+    text = text.replace(new RegExp(`~${i}~`, 'g'), nounMapping[i])
 
   return text
 }
@@ -113,9 +114,9 @@ const translateEngine: Record<TranslateEngine, any> = {
 
 // 转换翻译结果
 export async function translate(source: NormalizeStringify): Promise<TranslateHistory> {
+  // if (source.translate)
+  //   return source
   let nounMapping: string[] = []
-  if (source.translate)
-    return source
   const { use } = useTranslateStore()
   // 剔除注音标签
   let content = convertContent(source.origin)
