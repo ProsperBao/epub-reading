@@ -13,7 +13,7 @@ export function convertContent(content: string): string {
   return doc.innerText
 }
 
-// 转换特有名词，用 {number} 占位
+// 转换特有名词，用 ~number~ 占位
 export function convertUniqueNoun(content: string): [string, string[]] {
   let text = content
   text = text.replace(/「([^」]+)」/g, '“$1”')
@@ -86,6 +86,7 @@ export function requestMicrosoftTranslate(): Promise<string> {
     .then(respone => respone.json())
 }
 
+// 恢复特有名词
 export function recoveryUniqueNoun(content: string, nounMapping: string[]): string {
   let text = content
   for (let i = 0; i < nounMapping.length; i++)

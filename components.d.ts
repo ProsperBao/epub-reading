@@ -7,7 +7,6 @@ declare module '@vue/runtime-core' {
   export interface GlobalComponents {
     ContentWrap: typeof import('./src/components/ContentWrap.vue')['default']
     Footer: typeof import('./src/components/Footer.vue')['default']
-    Mask: typeof import('./src/components/Mask.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     Sidebar: typeof import('./src/components/Sidebar.vue')['default']

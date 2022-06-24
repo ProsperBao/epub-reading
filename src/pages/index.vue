@@ -4,7 +4,7 @@ import { useFileSelect } from '~/composables/useFileSelect'
 
 const { open, data } = useFileSelect()
 
-const { html, catalog, goto, navs, current } = useEpub(data)
+const { html, goto, navs, current, next } = useEpub(data)
 </script>
 
 <template>
@@ -12,11 +12,11 @@ const { html, catalog, goto, navs, current } = useEpub(data)
     点击打开
   </div>
 
-  <ContentWrap :content="html" />
+  <ContentWrap :content="html" @next="next" />
 
   <Footer />
 
-  <Sidebar v-if="catalog.length > 0" :catalog="catalog" :current="current" :navs="navs" @goto="goto" />
+  <Sidebar v-if="navs.length > 1" :current="current" :navs="navs" @goto="goto" />
 </template>
 
 <style>
