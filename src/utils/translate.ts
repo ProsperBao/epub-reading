@@ -14,7 +14,7 @@ export function convertContent(content: string): string {
 }
 
 // 转换特有名词，用 {number} 占位
-export function convertUniqueNoun(content: string): string {
+export function convertUniqueNoun(content: string): [string, string[]] {
   let text = content
   text = text.replace(/「([^」]+)」/g, '“$1”')
   const nounMapping = []
@@ -23,13 +23,14 @@ export function convertUniqueNoun(content: string): string {
     const uniqueNoun = list[dict]
     if (uniqueNoun) {
       for (const key in uniqueNoun) {
+        const index = nounMapping.length
         nounMapping.push(uniqueNoun[key])
-        text = text.replace(new RegExp(key, 'g'), uniqueNoun[key])
+        text = text.replace(new RegExp(key, 'g'), `(-${index}-)`)
       }
     }
   }
 
-  return text
+  return [text, nounMapping]
 }
 
 // 请求百度翻译
@@ -84,6 +85,14 @@ export function requestMicrosoftTranslate(): Promise<string> {
     .then(respone => respone.json())
 }
 
+export function recoveryUniqueNoun(content: string, nounMapping: string[]): string {
+  let text = content
+  for (let i = 0; i < nounMapping.length; i++)
+    text = text.replace(new RegExp(`(-${i}-)`, 'g'), nounMapping[i])
+
+  return text
+}
+
 // 更新数据缓存
 export function updateHistory(source: NormalizeStringify, translate: string): TranslateHistory {
   const { record } = useHistoryStore()
@@ -104,13 +113,16 @@ const translateEngine: Record<TranslateEngine, any> = {
 
 // 转换翻译结果
 export async function translate(source: NormalizeStringify): Promise<TranslateHistory> {
+  let nounMapping: string[] = []
   const { use } = useTranslateStore()
   // 剔除注音标签
   let content = convertContent(source.origin)
   // 转换专有名词，并且返回专有名词对应的翻译
-  content = convertUniqueNoun(content)
+  ;[content, nounMapping] = convertUniqueNoun(content)
   // 拼装请求参数并且请求翻译
   content = await (translateEngine[use])(content)
+  // 恢复专有名词
+  content = recoveryUniqueNoun(content, nounMapping)
   // 更新记录并返回数据
   return updateHistory(source, content)
 }
