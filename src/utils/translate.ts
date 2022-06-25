@@ -125,7 +125,6 @@ export async function translate(source: NormalizeStringify): Promise<TranslateHi
   ;[content, nounMapping] = convertUniqueNoun(content)
   if (!content)
     return source
-  debugger
   // 拼装请求参数并且请求翻译
   content = await (translateEngine[use])(content)
   // 恢复专有名词
