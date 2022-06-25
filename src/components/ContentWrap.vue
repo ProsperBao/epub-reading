@@ -2,6 +2,7 @@
 import type { NormalizeStringify } from '~/utils/epub'
 import { translate } from '~/utils/translate'
 defineProps<{ content: NormalizeStringify[] }>()
+defineEmits(['next'])
 </script>
 
 <template>
@@ -13,6 +14,7 @@ defineProps<{ content: NormalizeStringify[] }>()
           {{ line.translate }}
         </p>
       </template>
+      <div h-5 bg-blue />
     </div>
   </section>
 </template>
