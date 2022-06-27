@@ -2,6 +2,7 @@ import type { Book } from 'epubjs'
 import MD5 from 'crypto-js/md5'
 import { pipeline } from '../pipeline'
 import { extractResource } from './extractResource'
+import type { TranslateEngine } from '~/stores'
 import { useHistoryStore } from '~/stores'
 
 // 规范化文本中的所有图片标签
@@ -27,6 +28,7 @@ export interface NormalizeStringify {
   translate?: string // 翻译过后的文本
   hash: string // 哈希值用来对应历史缓存
   date?: string // 翻译时间戳，超过时间的文本会被清除
+  engine?: TranslateEngine // 翻译引擎
 }
 
 // 规范转化段落标签

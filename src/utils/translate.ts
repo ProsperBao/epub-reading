@@ -26,7 +26,7 @@ export function convertUniqueNoun(content: string): [string, string[]] {
         if ((new RegExp(key, 'g')).test(text)) {
           const index = nounMapping.length
           nounMapping.push(uniqueNoun[key])
-          text = text.replace(new RegExp(key, 'g'), `@${index}`)
+          text = text.replace(new RegExp(key, 'g'), `@${index}~`)
         }
       }
     }
@@ -90,7 +90,7 @@ export function requestMicrosoftTranslate(): Promise<string> {
 export function recoveryUniqueNoun(content: string, nounMapping: string[]): string {
   let text = content
   for (let i = 0; i < nounMapping.length; i++)
-    text = text.replace(new RegExp(`@\s?${i}`, 'g'), nounMapping[i])
+    text = text.replace(new RegExp(`@\s?${i}\s?~`, 'g'), nounMapping[i])
 
   return text
 }
@@ -98,12 +98,13 @@ export function recoveryUniqueNoun(content: string, nounMapping: string[]): stri
 // 更新数据缓存
 export function updateHistory(source: NormalizeStringify, translate: string): TranslateHistory {
   const { record } = useHistoryStore()
-  record[source.hash] = {
+  const result = {
     ...omit(source, ['origin', 'hash']),
     translate,
     date: `${+new Date()}`,
   }
-  return record[source.hash]
+  record[source.hash] = result
+  return result
 }
 
 const translateEngine: Record<TranslateEngine, any> = {
@@ -127,6 +128,7 @@ export async function translate(source: NormalizeStringify): Promise<TranslateHi
     return source
   // 拼装请求参数并且请求翻译
   content = await (translateEngine[use])(content)
+  source.engine = use
   // 恢复专有名词
   content = recoveryUniqueNoun(content, nounMapping)
   // 更新记录并返回数据

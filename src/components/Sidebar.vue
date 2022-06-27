@@ -11,9 +11,7 @@ const { open, targetRef, toggleOpen } = useToggleOutside()
 </script>
 
 <template>
-  <section fixed b="0.5" p-y-1 p-x-1 b-rd-r-5 left="-1" top-10 opacity="20" text="#A2A2A2" bg-white>
-    <div i-carbon:catalog text-sm @click="() => toggleOpen()" />
-  </section>
+  <section fixed left-0 w="10vw" top-0 h="100vh" @click="() => toggleOpen()" />
   <Transition>
     <aside
       v-if="open" ref="targetRef" fixed h-full p-x-2 text-left left-0 top-0 z-9 p-t-3 p-b-1 shadow shadow-current

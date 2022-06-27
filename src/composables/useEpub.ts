@@ -48,7 +48,7 @@ export function useEpub(epubData: Ref<ArrayBuffer | null>) {
     html: computed(() => {
       if (html.value.length === 0)
         return []
-      return html.value.map(i => ({ ...i, translate: record[i.hash]?.translate || i.translate }))
+      return html.value.map(i => ({ ...i, ...record[i.hash], translate: record[i.hash]?.translate || i.translate }))
     }),
     goto,
     navs: computed(() => {

@@ -5,9 +5,7 @@ const { open, targetRef, toggleOpen } = useToggleOutside()
 </script>
 
 <template>
-  <section fixed b="0.5" p-y-1 p-x-1 b-rd-r-5 left="-1" top-2 opacity="20" text="#A2A2A2" bg-white>
-    <div i-carbon:carbon text-sm @click="() => toggleOpen()" />
-  </section>
+  <section fixed right-0 w="10vw" top-0 h="100vh" @click="() => toggleOpen()" />
   <Transition>
     <footer
       v-if="open" ref="targetRef" fixed w-full left-0 bottom-0
