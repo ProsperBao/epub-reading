@@ -16,10 +16,7 @@ const resetHistory = () => {
 const reading = useReadingStore()
 const operateReading = (attr: 'height' | 'size', type: 'add' | 'sub') => {
   const value = reading.font[attr]
-  if (!value)
-    reading.font[attr] = 18
-  else
-    reading.font[attr] = type === 'add' ? +value + 1 : +value - 1
+  reading.font[attr] = type === 'add' ? +value + 1 : +value - 1
 }
 </script>
 
@@ -55,7 +52,7 @@ const operateReading = (attr: 'height' | 'size', type: 'add' | 'sub') => {
           <div i-carbon:add-alt text-xl @click="operateReading('height', 'add')" />
           <span>字体行高</span>
           <div i-carbon:subtract-alt text-xl @click="operateReading('height', 'sub')" />
-          <div i-carbon:renew text-xl @click="reading.font.height = 18" />
+          <div i-carbon:renew text-xl @click="reading.font.height = 22" />
         </div>
       </div>
     </div>

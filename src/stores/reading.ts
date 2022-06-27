@@ -4,7 +4,7 @@ import { defineStore } from 'pinia'
 export const useReadingStore = defineStore('reading', () => ({
   font: useLocalStorage('config-reading-font', {
     size: 18,
-    height: 18,
+    height: 22,
   }),
   record: useLocalStorage<{
     partPath?: string
