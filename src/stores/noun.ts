@@ -7,9 +7,9 @@ export type UniqueNounMap = Record<string, string>
 
 // 特有名词
 export const useUniqueNounStore = defineStore('noun', () => {
-  const use = useLocalStorage<string[]>('use', ['本好きの下剋上'])
+  const use = useLocalStorage<string[]>('config-noun-use', ['本好きの下剋上'])
   // 和每个小说/自定义词典一样，每个小说/自定义词典都有一个独立的列表
-  const list = useLocalStorage<UniqueNounList>('list', {})
+  const list = useLocalStorage<UniqueNounList>('config-noun-list', {})
 
   const initList = () => {
     list.value = Object.entries(import.meta.globEager('~/noun/*.json')).reduce((acc, [key, value]) => {

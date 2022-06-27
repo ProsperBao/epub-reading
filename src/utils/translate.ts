@@ -13,7 +13,7 @@ export function convertContent(content: string): string {
   return doc.innerText
 }
 
-// 转换特有名词，用 ~number~ 占位
+// 转换特有名词，用 @number~ 占位
 export function convertUniqueNoun(content: string): [string, string[]] {
   let text = content
   text = text.replace(/「([^」]+)」/g, ' “$1” ')
@@ -26,7 +26,7 @@ export function convertUniqueNoun(content: string): [string, string[]] {
         if ((new RegExp(key, 'g')).test(text)) {
           const index = nounMapping.length
           nounMapping.push(uniqueNoun[key])
-          text = text.replace(new RegExp(key, 'g'), `@${index}~`)
+          text = text.replace(new RegExp(key, 'g'), `@A${index}~`)
         }
       }
     }
@@ -57,7 +57,7 @@ export function requestYoudaoTranslate(content: string): Promise<string> {
       return q
     return q.substring(0, 10) + len + q.substring(len - 10, len)
   }
-  const { youdao: { appKey, key } } = useTranslateStore()
+  const { youdao: { appid: appKey, secret: key } } = useTranslateStore()
   const params: Record<string, string> = {
     q: content,
     appKey,
@@ -90,7 +90,7 @@ export function requestMicrosoftTranslate(): Promise<string> {
 export function recoveryUniqueNoun(content: string, nounMapping: string[]): string {
   let text = content
   for (let i = 0; i < nounMapping.length; i++)
-    text = text.replace(new RegExp(`@\s?${i}\s?~`, 'g'), nounMapping[i])
+    text = text.replace(new RegExp(`@ ?[Aa] ?${i} ?~`, 'g'), nounMapping[i])
 
   return text
 }

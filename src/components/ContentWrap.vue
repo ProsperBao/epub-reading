@@ -24,15 +24,15 @@ const translate = useTranslateStore()
       <template v-for="line in content" :key="line.hash">
         <LineSwipe :width="width" :line="line">
           <p
-            opacity-10 w="100vw" p-r-8 mt-4
+            w="100vw" p-r-8 mt-4
             :style="{ fontSize: `${reading.font.size}px`, lineHeight: `${reading.font.height}px` }"
             v-html="line.origin"
           />
           <div v-if="translate.loading.includes(line.hash)" i-carbon:fade class="rotate" absolute right-0 top-0 />
         </LineSwipe>
         <p
-          v-if="line.translate" :style="{ fontSize: `${reading.font.size - 2}px`, lineHeight: `${reading.font.height - 2}px` }"
-          opacity-5 text-sm mt-1
+          v-if="line.translate"
+          :style="{ fontSize: `${reading.font.size - 2}px`, lineHeight: `${reading.font.height - 2}px` }" text-sm mt-1
         >
           {{ line.translate }}
         </p>
@@ -44,13 +44,18 @@ const translate = useTranslateStore()
 
 <style scoped>
 .rotate {
-   animation: rotate 3s linear infinite;
+  animation: rotate 3s linear infinite;
 }
-@keyframes rotate{
 
-    from{transform: rotate(0deg)}
+@keyframes rotate {
 
-    to{transform: rotate(359deg)}
+  from {
+    transform: rotate(0deg)
+  }
+
+  to {
+    transform: rotate(359deg)
+  }
 
 }
 </style>

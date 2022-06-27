@@ -1,0 +1,10 @@
+<template>
+  <section>
+    <nav>
+      <div>1</div>
+    </nav>
+    <section>
+      1
+    </section>
+  </section>
+</template>

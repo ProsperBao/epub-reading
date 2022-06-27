@@ -11,7 +11,7 @@ export const useTranslateStore = defineStore('translate', () => ({
     secret: 'WM74h0ML7mKyiCO3xr4Z',
   }),
   youdao: useLocalStorage('config-translate-youdao', {
-    appKey: '791194598ffb2694',
-    key: 'ah0LK287QzXjqe6ieWq1OzdsW6UP2qX1',
+    appid: '791194598ffb2694',
+    secret: 'ah0LK287QzXjqe6ieWq1OzdsW6UP2qX1',
   }),
 }))
