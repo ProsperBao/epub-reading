@@ -28,7 +28,7 @@ const { isSwiping, lengthX } = useSwipe(
 </script>
 
 <template>
-  <div ref="target" class="overlay" :class="{ animated: !isSwiping }" :style="{ transform: `translateX(-${left}%)` }">
+  <div ref="target" class="overlay" :class="{ animated: !isSwiping }" relative :style="{ transform: `translateX(-${left}%)` }">
     <slot />
   </div>
 </template>

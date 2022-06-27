@@ -4,6 +4,7 @@ export type TranslateEngine = 'google' | 'baidu' | 'microsoft' | 'youdao'
 
 // 翻译
 export const useTranslateStore = defineStore('translate', () => ({
+  loading: ref<string[]>([]),
   use: useLocalStorage<TranslateEngine>('config-translate-use', 'youdao'),
   baidu: useLocalStorage('config-translate-baidu', {
     appid: '20160823000027324',

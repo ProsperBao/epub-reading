@@ -116,8 +116,9 @@ const translateEngine: Record<TranslateEngine, any> = {
 
 // 转换翻译结果
 export async function translate(source: NormalizeStringify): Promise<TranslateHistory> {
-  // if (source.translate)
-  //   return source
+  const translate = useTranslateStore()
+  if (translate.loading.includes(source.hash))
+    return {}
   let nounMapping: string[] = []
   const { use } = useTranslateStore()
   // 剔除注音标签
@@ -126,8 +127,12 @@ export async function translate(source: NormalizeStringify): Promise<TranslateHi
   ;[content, nounMapping] = convertUniqueNoun(content)
   if (!content)
     return source
+  // 加载
+  translate.loading.push(source.hash)
   // 拼装请求参数并且请求翻译
   content = await (translateEngine[use])(content)
+  // 加载完成
+  translate.loading = translate.loading.filter(hash => hash !== source.hash)
   source.engine = use
   // 恢复专有名词
   content = recoveryUniqueNoun(content, nounMapping)

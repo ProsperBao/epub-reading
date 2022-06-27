@@ -12,15 +12,12 @@ const { open, targetRef, toggleOpen } = useToggleOutside()
       z-9 p-t-3 p-b-1 transition-all-300 shadow shadow-current flex
       justify-around bg-white dark:bg-hex-121212 z-2
     >
-      <span class="icon-btn" text-center>
-        <div i-carbon:settings text-2xl m-a />
-        <span text-sm>设置</span>
-      </span>
-      <span class="icon-btn" text-center @click="() => toggleDark()">
+      <Setting />
+      <span class="icon-btn" w-18 text-center @click="() => toggleDark()">
         <div i="carbon-sun dark:carbon-moon" text-2xl m-a />
         <span text-sm>切换</span>
       </span>
-      <translate-engine />
+      <TranslateEngine />
     </footer>
   </Transition>
 </template>

@@ -10,10 +10,12 @@ declare module '@vue/runtime-core' {
     LineSwipe: typeof import('./src/components/LineSwipe.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    Setting: typeof import('./src/components/Btn/Setting.vue')['default']
     Sidebar: typeof import('./src/components/Sidebar.vue')['default']
     Starport: typeof import('vue-starport')['Starport']
     StarportCarrier: typeof import('vue-starport')['StarportCarrier']
     TranslateEngine: typeof import('./src/components/Btn/TranslateEngine.vue')['default']
+    'TranslateEngine copy': typeof import('./src/components/Btn/TranslateEngine copy.vue')['default']
   }
 }
 
