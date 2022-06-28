@@ -90,9 +90,9 @@ export function requestMicrosoftTranslate(): Promise<string> {
 export function recoveryUniqueNoun(content: string, nounMapping: string[]): string {
   let text = content
   for (let i = 0; i < nounMapping.length; i++)
-    text = text.replace(new RegExp(`★${i}★`, 'g'), nounMapping[i])
+    text = text.replace(new RegExp(`★?${i}★`, 'g'), nounMapping[i])
 
-  return text
+  return text.replace(/★★/g, '·')
 }
 
 // 更新数据缓存
