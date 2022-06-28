@@ -11,4 +11,5 @@ export const useReadingStore = defineStore('reading', () => ({
     percent?: number
   }>('config-reading-record', {}),
   lockScroll: ref(false),
+  guid: useLocalStorage('config-reading-guid', false),
 }))
