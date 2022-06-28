@@ -19,16 +19,6 @@ const operateReading = (attr: 'height' | 'size', type: 'add' | 'sub') => {
   const value = reading.font[attr]
   reading.font[attr] = type === 'add' ? +value + 1 : +value - 1
 }
-// 配色相关
-const mode = useColorMode({
-  modes: {
-    green: 'green',
-    mung: 'mung',
-    autumn: 'autumn',
-    sea: 'sea',
-    rouge: 'rouge',
-  },
-})
 </script>
 
 <template>
@@ -74,12 +64,12 @@ const mode = useColorMode({
         非暗色模式配色设置
       </h5>
       <div flex justify-around gap-4 p-4>
-        <div class="half-circle" :style="{ '--setting-f-color': '#374451', '--setting-b-color': 'white' }" @click="mode = 'light'" />
-        <div class="half-circle" :style="{ '--setting-f-color': '#4E7B6C', '--setting-b-color': '#E3EDCD' }" @click="mode = 'green'" />
-        <div class="half-circle" :style="{ '--setting-f-color': '#4E7B6C', '--setting-b-color': '#C7EDCC' }" @click="mode = 'mung'" />
-        <div class="half-circle" :style="{ '--setting-f-color': '#374451', '--setting-b-color': '#FFF2E2' }" @click="mode = 'autumn'" />
-        <div class="half-circle" :style="{ '--setting-f-color': '#374451', '--setting-b-color': '#DCE2F1' }" @click="mode = 'sea'" />
-        <div class="half-circle" :style="{ '--setting-f-color': '#374451', '--setting-b-color': '#FDE6E0' }" @click="mode = 'rouge'" />
+        <div class="half-circle" :style="{ '--setting-f-color': '#374451', '--setting-b-color': 'white' }" @click="reading.mode = 'light'" />
+        <div class="half-circle" :style="{ '--setting-f-color': '#4E7B6C', '--setting-b-color': '#E3EDCD' }" @click="reading.mode = 'green'" />
+        <div class="half-circle" :style="{ '--setting-f-color': '#4E7B6C', '--setting-b-color': '#C7EDCC' }" @click="reading.mode = 'mung'" />
+        <div class="half-circle" :style="{ '--setting-f-color': '#374451', '--setting-b-color': '#FFF2E2' }" @click="reading.mode = 'autumn'" />
+        <div class="half-circle" :style="{ '--setting-f-color': '#374451', '--setting-b-color': '#DCE2F1' }" @click="reading.mode = 'sea'" />
+        <div class="half-circle" :style="{ '--setting-f-color': '#374451', '--setting-b-color': '#FDE6E0' }" @click="reading.mode = 'rouge'" />
       </div>
       <div />
     </div>
