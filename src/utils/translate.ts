@@ -26,7 +26,7 @@ export function convertUniqueNoun(content: string): [string, string[]] {
         if ((new RegExp(key, 'g')).test(text)) {
           const index = nounMapping.length
           nounMapping.push(uniqueNoun[key])
-          text = text.replace(new RegExp(key, 'g'), `@A${index}~`)
+          text = text.replace(new RegExp(key, 'g'), `★${index}★`)
         }
       }
     }
@@ -90,7 +90,7 @@ export function requestMicrosoftTranslate(): Promise<string> {
 export function recoveryUniqueNoun(content: string, nounMapping: string[]): string {
   let text = content
   for (let i = 0; i < nounMapping.length; i++)
-    text = text.replace(new RegExp(`@ ?[Aa] ?${i} ?~`, 'g'), nounMapping[i])
+    text = text.replace(new RegExp(`★${i}★`, 'g'), nounMapping[i])
 
   return text
 }

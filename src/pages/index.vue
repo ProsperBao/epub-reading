@@ -17,6 +17,8 @@ const { html, goto, navs, current, next } = useEpub(data)
   <Footer />
 
   <Sidebar v-if="navs.length > 1" :current="current" :navs="navs" @goto="goto" />
+
+  <TestFunction />
 </template>
 
 <style>

@@ -14,6 +14,7 @@ declare module '@vue/runtime-core' {
     Sidebar: typeof import('./src/components/Sidebar.vue')['default']
     Starport: typeof import('vue-starport')['Starport']
     StarportCarrier: typeof import('vue-starport')['StarportCarrier']
+    TestFunction: typeof import('./src/components/TestFunction.vue')['default']
     TranslateEngine: typeof import('./src/components/Btn/TranslateEngine.vue')['default']
     TranslateSecret: typeof import('./src/components/TranslateSecret.vue')['default']
   }
