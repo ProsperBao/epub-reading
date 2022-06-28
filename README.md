@@ -25,7 +25,7 @@
 - [ ] IndexDB 保存读取的数据
 
 ### 使用
-可以使用我已经部署好的 (epub-reading)[reading.baii.icu] 
+可以使用我已经部署好的 [epub-reading](reading.baii.icu) 
 或者可以尝试自己部署
 
 ↓↓↓↓↓↓↓↓↓↓↓↓↓
