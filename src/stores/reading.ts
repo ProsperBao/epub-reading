@@ -10,4 +10,5 @@ export const useReadingStore = defineStore('reading', () => ({
     partPath?: string
     percent?: number
   }>('config-reading-record', {}),
+  lockScroll: ref(false),
 }))

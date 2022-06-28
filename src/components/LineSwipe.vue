@@ -1,10 +1,11 @@
 <script setup lang="ts">
-import { useTranslateStore } from '~/stores'
+import { useReadingStore, useTranslateStore } from '~/stores'
 import type { NormalizeStringify } from '~/utils/epub'
 import { translate } from '~/utils/translate'
 
 const props = defineProps<{ width: number; line: NormalizeStringify }>()
 const translateStore = useTranslateStore()
+const readingStore = useReadingStore()
 
 const target = ref<HTMLElement | null>(null)
 const left = ref(0)
@@ -12,7 +13,12 @@ const { isSwiping, lengthX } = useSwipe(
   target, {
     passive: true,
     onSwipe() {
-      left.value = lengthX.value / props.width * 100
+      const percent = lengthX.value / props.width * 100
+      // 超过5才有翻译的意图
+      if (percent > 5)
+        readingStore.lockScroll = true
+
+      left.value = percent < 10 ? 0 : percent
     },
     onSwipeEnd() {
       if (+left.value > 30) {
@@ -23,6 +29,7 @@ const { isSwiping, lengthX } = useSwipe(
           translate(props.line)
       }
       left.value = 0
+      readingStore.lockScroll = false
     },
   })
 </script>

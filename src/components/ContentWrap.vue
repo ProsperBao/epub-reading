@@ -19,7 +19,7 @@ const translate = useTranslateStore()
 </script>
 
 <template>
-  <section>
+  <section h-full p-x-4>
     <div text-left>
       <template v-for="line in content" :key="line.hash">
         <LineSwipe :width="width" :line="line">
