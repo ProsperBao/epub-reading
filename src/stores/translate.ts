@@ -14,8 +14,7 @@ export interface EngineConfig {
 export const useTranslateStore = defineStore<'translate', {
   loading: Ref<string[]>
   use: RemovableRef<TranslateEngine>
-  [key: string]: RemovableRef<EngineConfig> | Ref<string[]> | RemovableRef<TranslateEngine>
-}>('translate', () => ({
+} & Record<TranslateEngine, RemovableRef<EngineConfig>>>('translate', () => ({
   loading: ref<string[]>([]),
   use: useLocalStorage<TranslateEngine>('config-translate-use', 'youdao'),
   baidu: useLocalStorage<EngineConfig>('config-translate-baidu', { appid: '', secret: '' }),
