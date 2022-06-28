@@ -11,40 +11,56 @@ html,
 html .theme-wrap{
   @apply text-hex-374451;
   @apply bg-white;
+  --theme-color: #374451;
+  --theme-background: #FFF;
+  background: var(--theme-background);
+  color: var(--theme-color);
 }
 
 html.green,
 html.green .theme-wrap  {
   @apply !bg-hex-E3EDCD;
   @apply !text-hex-4E7B6C;
+  --theme-color: #4E7B6C;
+  --theme-background: #E3EDCD;
 }
 
 html.mung,
 html.mung .theme-wrap  {
   @apply !bg-hex-C7EDCC;
   @apply !text-hex-4E7B6C;
+  --theme-color: #4E7B6C;
+  --theme-background: #C7EDCC;
 }
 
 html.autumn,
 html.autumn .theme-wrap  {
   @apply !bg-hex-FFF2E2;
   @apply !text-hex-374451;
+  --theme-color: #374451;
+  --theme-background: #FFF2E2;
 }
 
 html.sea,
 html.sea .theme-wrap  {
   @apply !bg-hex-DCE2F1;
   @apply !text-hex-374451;
+  --theme-color: #374451;
+  --theme-background: #DCE2F1;
 }
 
 html.rouge,
 html.rouge .theme-wrap  {
   @apply !bg-hex-FDE6E0;
   @apply !text-hex-374451;
+  --theme-color: #374451;
+  --theme-background: #FDE6E0;
 }
 
 html.dark,
 html.dark .theme-wrap {
   @apply !bg-hex-121212;
   @apply !text-gray-200;
+  --theme-color: #374451;
+  --theme-background: #121212;
 }

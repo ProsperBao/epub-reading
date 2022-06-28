@@ -42,9 +42,10 @@ const mode = useColorMode({
       z-10 class="theme-wrap"
     >
       <h5 text-left font-600 p-l-2 p-t-2>
-        清理缓存数据
+        数据管理
       </h5>
-      <div text-left flex gap-x-2 p-2>
+      <div text-left flex justify-around gap-x-2 p-2>
+        <TranslateSecret />
         <button class="btn" @click="resetNoun">
           清理翻译历史
         </button>

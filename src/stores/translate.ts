@@ -1,17 +1,25 @@
+import type { RemovableRef } from '@vueuse/core'
 import { defineStore } from 'pinia'
+import type { Ref } from 'vue'
 
 export type TranslateEngine = 'google' | 'baidu' | 'microsoft' | 'youdao'
+export const TRANSLATE_ENGINE: TranslateEngine[] = ['youdao', 'baidu', 'microsoft', 'google']
+
+export interface EngineConfig {
+  appid: string
+  secret: string
+}
 
 // 翻译
-export const useTranslateStore = defineStore('translate', () => ({
+export const useTranslateStore = defineStore<'translate', {
+  loading: Ref<string[]>
+  use: RemovableRef<TranslateEngine>
+  [key: string]: RemovableRef<EngineConfig> | Ref<string[]> | RemovableRef<TranslateEngine>
+}>('translate', () => ({
   loading: ref<string[]>([]),
   use: useLocalStorage<TranslateEngine>('config-translate-use', 'youdao'),
-  baidu: useLocalStorage('config-translate-baidu', {
-    appid: '20160823000027324',
-    secret: 'WM74h0ML7mKyiCO3xr4Z',
-  }),
-  youdao: useLocalStorage('config-translate-youdao', {
-    appid: '791194598ffb2694',
-    secret: 'ah0LK287QzXjqe6ieWq1OzdsW6UP2qX1',
-  }),
+  baidu: useLocalStorage<EngineConfig>('config-translate-baidu', { appid: '', secret: '' }),
+  youdao: useLocalStorage<EngineConfig>('config-translate-youdao', { appid: '', secret: '' }),
+  microsoft: useLocalStorage<EngineConfig>('config-translate-microsoft', { appid: '', secret: '' }),
+  google: useLocalStorage<EngineConfig>('config-translate-google', { appid: '', secret: '' }),
 }))
