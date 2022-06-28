@@ -5,7 +5,7 @@ const reading = useReadingStore()
 </script>
 
 <template>
-  <main v-scroll-lock="reading.lockScroll" font-sans w-100vw h-100vh overflow-x-hidden text="center gray-700 dark:gray-200">
+  <main v-scroll-lock="reading.lockScroll" font-sans w-100vw h-100vh overflow-x-hidden text-center>
     <StarportCarrier>
       <RouterView />
     </StarportCarrier>

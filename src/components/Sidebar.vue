@@ -15,7 +15,7 @@ const { open, targetRef, toggleOpen } = useToggleOutside()
   <Transition>
     <aside
       v-if="open" ref="targetRef" fixed h-full p-x-2 text-left left-0 top-0 z-9 p-t-3 p-b-1 shadow shadow-current
-      flex justify-around bg-white dark:bg-hex-121212 z-2 overflow-y-scroll
+      flex justify-around class="theme-wrap" z-2 overflow-y-scroll
     >
       <ul w-30vw>
         <li v-for="([navItem, children], navIdx) in navs" :key="navIdx" p-y-2>

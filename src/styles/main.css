@@ -6,6 +6,45 @@ body,
   padding: 0;
 }
 
-html.dark {
-  background: #121212;
+
+html,
+html .theme-wrap{
+  @apply text-hex-374451;
+  @apply bg-white;
+}
+
+html.green,
+html.green .theme-wrap  {
+  @apply !bg-hex-E3EDCD;
+  @apply !text-hex-4E7B6C;
+}
+
+html.mung,
+html.mung .theme-wrap  {
+  @apply !bg-hex-C7EDCC;
+  @apply !text-hex-4E7B6C;
+}
+
+html.autumn,
+html.autumn .theme-wrap  {
+  @apply !bg-hex-FFF2E2;
+  @apply !text-hex-374451;
+}
+
+html.sea,
+html.sea .theme-wrap  {
+  @apply !bg-hex-DCE2F1;
+  @apply !text-hex-374451;
+}
+
+html.rouge,
+html.rouge .theme-wrap  {
+  @apply !bg-hex-FDE6E0;
+  @apply !text-hex-374451;
+}
+
+html.dark,
+html.dark .theme-wrap {
+  @apply !bg-hex-121212;
+  @apply !text-gray-200;
 }

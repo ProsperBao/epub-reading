@@ -10,7 +10,7 @@ const { open, targetRef, toggleOpen } = useToggleOutside()
     <footer
       v-if="open" ref="targetRef" fixed w-full left-0 bottom-0
       z-9 p-t-3 p-b-1 transition-all-300 shadow shadow-current flex
-      justify-around bg-white dark:bg-hex-121212 z-2
+      justify-around class="theme-wrap"
     >
       <Setting />
       <span class="icon-btn" w-18 text-center @click="() => toggleDark()">
