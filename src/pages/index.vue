@@ -1,10 +1,13 @@
 <script setup lang="ts">
 import { useEpub } from '~/composables/useEpub'
 import { useFileSelect } from '~/composables/useFileSelect'
+import { useGuide } from '~/composables/useGuide'
 
 const { open, data } = useFileSelect()
 
 const { html, goto, navs, current, next } = useEpub(data)
+
+useGuide('main')
 </script>
 
 <template>
@@ -12,13 +15,11 @@ const { html, goto, navs, current, next } = useEpub(data)
     点击打开
   </div>
 
-  <ContentWrap :content="html" @next="next" />
+  <ContentWrap v-if="html.length > 0" :content="html" @next="next" />
 
   <Footer />
 
-  <Sidebar v-if="navs.length > 1" :current="current" :navs="navs" @goto="goto" />
-
-  <Guid />
+  <Sidebar :current="current" :navs="navs" @goto="goto" />
 </template>
 
 <style>

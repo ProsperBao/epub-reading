@@ -106,7 +106,7 @@ export function recoveryUniqueNoun(content: string, nounMapping: string[]): stri
 }
 
 // 更新数据缓存
-export function updateHistory(source: NormalizeStringify, translate: string): TranslateHistory {
+export function updateHistory(source: NormalizeStringify, translate: string): NormalizeStringify {
   const { record } = useHistoryStore()
   const result = {
     ...omit(source, ['origin', 'hash']),
@@ -114,7 +114,7 @@ export function updateHistory(source: NormalizeStringify, translate: string): Tr
     date: `${+new Date()}`,
   }
   record[source.hash] = result
-  return result
+  return { ...source, ...result }
 }
 
 const translateEngine: Record<TranslateEngine, any> = {
@@ -125,7 +125,7 @@ const translateEngine: Record<TranslateEngine, any> = {
 }
 
 // 转换翻译结果
-export async function translate(source: NormalizeStringify): Promise<TranslateHistory> {
+export async function translate(source: NormalizeStringify): Promise<NormalizeStringify> {
   const translate = useTranslateStore()
   if (translate.loading.includes(source.hash))
     return source

@@ -11,7 +11,7 @@ const { open, targetRef, toggleOpen } = useToggleOutside()
 </script>
 
 <template>
-  <section fixed left-0 w="10vw" top-0 h="100vh" @click="() => toggleOpen()" />
+  <section fixed left-0 w="10vw" top-0 h="100vh" @click="() => navs.length > 0 && toggleOpen()" />
   <Transition>
     <aside
       v-if="open" ref="targetRef" fixed h-full p-x-2 text-left left-0 top-0 z-9 p-t-3 p-b-1 shadow shadow-current
@@ -23,7 +23,10 @@ const { open, targetRef, toggleOpen } = useToggleOutside()
             {{ navItem.label }}
           </div>
           <ul m-l-4 inline-block w-20vw>
-            <li v-for="(item, idx) in children" :key="idx" inline-block :opacity="`${current === item ? '50' : '100'}`" @click="$emit('goto', item)">
+            <li
+              v-for="(item, idx) in children" :key="idx" inline-block :opacity="`${current === item ? '50' : '100'}`"
+              @click="$emit('goto', item)"
+            >
               第 {{ idx + 1 }} 小节
             </li>
           </ul>

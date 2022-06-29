@@ -5,7 +5,7 @@ const { open, targetRef, toggleOpen } = useToggleOutside()
 </script>
 
 <template>
-  <section fixed right-0 w="10vw" top-0 h="100vh" @click="() => toggleOpen()" />
+  <section fixed right-0 w="10vw" top-0 h="100vh" @click.stop="() => toggleOpen()" />
   <Transition>
     <footer
       v-if="open" ref="targetRef" fixed w-full left-0 bottom-0
@@ -13,7 +13,7 @@ const { open, targetRef, toggleOpen } = useToggleOutside()
       justify-around class="theme-wrap"
     >
       <Setting />
-      <span class="icon-btn" w-18 text-center @click="() => toggleDark()">
+      <span id="guide-setting-2" class="icon-btn" w-18 text-center @click.stop="() => toggleDark()">
         <div i="carbon-sun dark:carbon-moon" text-2xl m-a />
         <span text-sm>切换</span>
       </span>

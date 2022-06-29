@@ -9,7 +9,7 @@ const { current, engine, toggle } = useTranslate()
 
 <template>
   <div relative inline-block>
-    <span class="icon-btn" w-18 text-center @click="() => toggleOpen()">
+    <span id="guide-setting-3" class="icon-btn" w-18 text-center @click="() => toggleOpen()">
       <div i-carbon:translate text-2xl ma />
       <span>翻译引擎</span>
     </span>

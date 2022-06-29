@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import { useGuide } from '~/composables/useGuide'
 import { useReadingStore, useTranslateStore } from '~/stores'
 import type { NormalizeStringify } from '~/utils/epub'
 const props = defineProps<{ content: NormalizeStringify[] }>()
@@ -16,11 +17,13 @@ useIntersectionObserver(
 const { width } = useElementSize(target)
 const reading = useReadingStore()
 const translate = useTranslateStore()
+
+useGuide('content')
 </script>
 
 <template>
-  <section h-full p-x-4>
-    <div text-left>
+  <section id="content-wrap" h-full p-x-4>
+    <div id="guide-content-1" text-left origin-content>
       <template v-for="line in content" :key="line.hash">
         <LineSwipe :width="width" :line="line">
           <p

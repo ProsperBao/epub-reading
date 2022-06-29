@@ -1,8 +1,6 @@
 <script lang="ts" setup>
-import { MD5 } from 'crypto-js'
 import { useToggleOutside } from '~/composables/useToggleOutside'
 import { useHistoryStore, useReadingStore, useUniqueNounStore } from '~/stores'
-import { translate } from '~/utils/translate'
 const { open, targetRef, toggleOpen } = useToggleOutside()
 // 清理缓存
 const { reset } = useUniqueNounStore()
@@ -21,21 +19,10 @@ const operateReading = (attr: 'height' | 'size', type: 'add' | 'sub') => {
   const value = reading.font[attr]
   reading.font[attr] = type === 'add' ? +value + 1 : +value - 1
 }
-
-const c = ref('')
-const t = async () => {
-  if (!c.value)
-    return
-  // eslint-disable-next-line no-console
-  console.log(await translate({
-    origin: c.value,
-    hash: MD5(c.value).toString().substring(0, 20),
-  }))
-}
 </script>
 
 <template>
-  <span class="icon-btn" w-18 text-center @click="() => toggleOpen()">
+  <span id="guide-setting-1" class="icon-btn" w-18 text-center @click="() => toggleOpen()">
     <div i-carbon:settings text-2xl ma />
     <span>设置</span>
   </span>
@@ -105,12 +92,6 @@ const t = async () => {
       <div />
     </div>
   </Transition>
-  <section fixed top-0 left-0 shadow shadow-current w-full p="x-3 t-3">
-    <div flex gap-2 items-center mb-3>
-      <label w-25>翻译测试:</label>
-      <input v-model="c" type="text" p="x-4 y-1" border w-full rd @change="t">
-    </div>
-  </section>
 </template>
 
 <style lang="postcss" scoped>
