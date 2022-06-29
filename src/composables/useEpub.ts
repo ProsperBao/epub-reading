@@ -37,7 +37,7 @@ export function useEpub(epubData: Ref<ArrayBuffer | null>) {
     const res = await epub(n as ArrayBuffer).opened
     // 保存数据以便后续加载
     book.value = res
-    navs.value = res.navigation.toc.map(i => ({ ...i, label: i.label.replace(/\n| /g, '') }))
+    navs.value = res.navigation.toc.map(i => ({ ...i, label: i.label.replace(/\n| /g, ''), href: i.href.split('#')[0] }))
     catalog.value = (res.resources as any).html.map((i: { href: string }) => i.href)
     goto(readingRecord.partPath || catalog.value[0])
   }
