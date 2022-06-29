@@ -11,7 +11,7 @@ const { open, targetRef, toggleOpen } = useToggleOutside()
 </script>
 
 <template>
-  <section fixed left-0 w="10vw" top-0 h="100vh" @click="() => navs.length > 0 && toggleOpen()" />
+  <section id="guide-main-2" fixed left-0 w="10vw" top-0 h="100vh" @click="() => navs.length > 0 && toggleOpen()" />
   <Transition>
     <aside
       v-if="open" ref="targetRef" fixed h-full p-x-2 text-left left-0 top-0 z-9 p-t-3 p-b-1 shadow shadow-current

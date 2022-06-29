@@ -2,7 +2,7 @@ import Driver from 'driver.js'
 
 type GuideType = 'main' | 'content'
 
-const GuideMap: Record<string, Driver.Step[]> = {
+const GuideMap: Record<GuideType, Driver.Step[]> = {
   main: [
     {
       element: '#guide-main-1',
@@ -48,6 +48,7 @@ export function useGuide(type: GuideType) {
       document.body.style.position = ''
     },
   })
+
   if (guide.value.includes(type)) {
     nextTick(() => {
       document.body.style.position = 'fixed'

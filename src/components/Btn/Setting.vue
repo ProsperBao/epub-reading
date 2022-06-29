@@ -22,7 +22,7 @@ const operateReading = (attr: 'height' | 'size', type: 'add' | 'sub') => {
 </script>
 
 <template>
-  <span id="guide-setting-1" class="icon-btn" w-18 text-center @click="() => toggleOpen()">
+  <span class="icon-btn" w-18 text-center @click="() => toggleOpen()">
     <div i-carbon:settings text-2xl ma />
     <span>设置</span>
   </span>

@@ -10,7 +10,7 @@ export function useEpub(epubData: Ref<ArrayBuffer | null>) {
   const html = ref<NormalizeStringify[]>([])
   const catalog = ref<string[]>([])
   const navs = ref<NavItem[]>([])
-  const { record } = useHistoryStore()
+  const history = useHistoryStore()
   const { record: readingRecord } = useReadingStore()
 
   const goto = async (path: string, concat = false) => {
@@ -39,7 +39,12 @@ export function useEpub(epubData: Ref<ArrayBuffer | null>) {
     book.value = res
     navs.value = res.navigation.toc.map(i => ({ ...i, label: i.label.replace(/\n| /g, ''), href: i.href.split('#')[0] }))
     catalog.value = (res.resources as any).html.map((i: { href: string }) => i.href)
-    goto(readingRecord.partPath || catalog.value[0])
+    let partPath = readingRecord.partPath || catalog.value[0]
+    if (history.name !== res.packaging.metadata.title) {
+      history.name = res.packaging.metadata.title
+      partPath = catalog.value[0]
+    }
+    goto(partPath)
   }
 
   watch(() => epubData.value, n => n && loadEpubFile(n))
@@ -48,7 +53,7 @@ export function useEpub(epubData: Ref<ArrayBuffer | null>) {
     html: computed(() => {
       if (html.value.length === 0)
         return []
-      return html.value.map(i => ({ ...i, ...record[i.hash], translate: record[i.hash]?.translate || i.translate }))
+      return html.value.map(i => ({ ...i, ...history.record[i.hash], translate: history.record[i.hash]?.translate || i.translate }))
     }),
     goto,
     navs: computed(() => {

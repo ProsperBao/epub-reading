@@ -7,6 +7,7 @@ export type TranslateHistory = Omit<NormalizeStringify, 'origin' | 'hash'>
 // 翻译记录
 export const useHistoryStore = defineStore('history', () => {
   const record = useLocalStorage<Record<string, TranslateHistory>>('config-history-record', {})
+  const name = useLocalStorage('config-history-name', '')
 
   // 过滤 record 中的过期数据
   const processExpire = () => {
@@ -24,5 +25,6 @@ export const useHistoryStore = defineStore('history', () => {
 
   return {
     record,
+    name,
   }
 })

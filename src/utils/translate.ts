@@ -2,7 +2,7 @@ import fetchJsonp from 'fetch-jsonp'
 import { MD5, SHA256, enc } from 'crypto-js'
 import { omit } from 'lodash'
 import type { NormalizeStringify } from './epub'
-import type { TranslateEngine, TranslateHistory } from '~/stores'
+import type { TranslateEngine } from '~/stores'
 import { useHistoryStore, useTranslateStore, useUniqueNounStore } from '~/stores'
 
 // 转换处理注音标签
