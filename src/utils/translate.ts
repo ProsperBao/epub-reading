@@ -13,7 +13,16 @@ export function convertContent(content: string): string {
   return doc.innerText
 }
 
-// 转换特有名词，用 @number~ 占位
+export function useEngineTextSlot(type: 'convert' | 'recovery', index: number): string {
+  const translate = useTranslateStore()
+  if (type === 'convert')
+    return translate[translate.use].slot.replace(/<slot>/g, `${index}`)
+
+  else
+    return translate[translate.use].slotRegex.replace(/<slot>/g, `${index}`)
+}
+
+// 转换特有名词
 export function convertUniqueNoun(content: string): [string, string[]] {
   let text = content
   text = text.replace(/「([^」]+)」/g, ' “$1” ')
@@ -26,7 +35,7 @@ export function convertUniqueNoun(content: string): [string, string[]] {
         if ((new RegExp(key, 'g')).test(text)) {
           const index = nounMapping.length
           nounMapping.push(uniqueNoun[key])
-          text = text.replace(new RegExp(key, 'g'), `★A${index}★`)
+          text = text.replace(new RegExp(key, 'g'), useEngineTextSlot('convert', index))
         }
       }
     }
@@ -90,7 +99,8 @@ export function requestMicrosoftTranslate(): Promise<string> {
 export function recoveryUniqueNoun(content: string, nounMapping: string[]): string {
   let text = content
   for (let i = 0; i < nounMapping.length; i++)
-    text = text.replace(new RegExp(`★? ?[Aa] ?${i}★`, 'g'), nounMapping[i])
+    // 关闭贪婪模式
+    text = text.replace(new RegExp(useEngineTextSlot('recovery', i), 'g'), nounMapping[i])
 
   return text
 }
@@ -118,7 +128,7 @@ const translateEngine: Record<TranslateEngine, any> = {
 export async function translate(source: NormalizeStringify): Promise<TranslateHistory> {
   const translate = useTranslateStore()
   if (translate.loading.includes(source.hash))
-    return {}
+    return source
   let nounMapping: string[] = []
   const { use } = useTranslateStore()
   // 剔除注音标签
@@ -130,12 +140,17 @@ export async function translate(source: NormalizeStringify): Promise<TranslateHi
   // 加载
   translate.loading.push(source.hash)
   // 拼装请求参数并且请求翻译
-  content = await (translateEngine[use])(content)
-  // 加载完成
-  translate.loading = translate.loading.filter(hash => hash !== source.hash)
-  source.engine = use
-  // 恢复专有名词
-  content = recoveryUniqueNoun(content, nounMapping)
-  // 更新记录并返回数据
-  return updateHistory(source, content)
+  try {
+    content = await (translateEngine[use])(content)
+    source.engine = use
+    // 恢复专有名词
+    content = recoveryUniqueNoun(content, nounMapping)
+    // 更新记录并返回数据
+    return updateHistory(source, content)
+  }
+  finally {
+    // 加载完成
+    translate.loading = translate.loading.filter(hash => hash !== source.hash)
+  }
+  return source
 }

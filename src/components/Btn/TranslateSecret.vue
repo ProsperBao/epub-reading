@@ -35,11 +35,19 @@ const engine = computed({
       <section p="x-3 t-3">
         <div flex gap-2 items-center>
           <label w-18>应用ID: </label>
-          <input v-model="engine.appid" type="text" p="x-4 y-1" w-full rd>
+          <input v-model="engine.appid" type="text" p="x-4 y-1" w-full border rd>
         </div>
         <div flex gap-2 items-center mt-3>
           <label w-25>应用密钥: </label>
-          <input v-model="engine.secret" type="password" p="x-4 y-1" w-full rd>
+          <input v-model="engine.secret" type="password" p="x-4 y-1" w-full border rd>
+        </div>
+        <div flex gap-2 items-center mt-3>
+          <label w-25>替换插槽: </label>
+          <input v-model="engine.slot" type="text" p="x-4 y-1" w-full border rd>
+        </div>
+        <div flex gap-2 items-center mt-3>
+          <label w-25>匹配正则: </label>
+          <input v-model="engine.slotRegex" type="text" p="x-4 y-1" w-full border rd>
         </div>
       </section>
     </section>
