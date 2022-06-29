@@ -26,8 +26,12 @@ export function useEpub(epubData: Ref<ArrayBuffer | null>) {
       const idx = catalog.value.findIndex(i => readingRecord.partPath === i)
       if (idx !== -1) {
         const nextPath = catalog.value[idx + 1]
-        if (nextPath)
+        if (nextPath) {
           goto(nextPath, true)
+          window.scrollTo({
+            top: 0,
+          })
+        }
       }
     }
   }

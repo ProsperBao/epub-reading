@@ -7,7 +7,14 @@ defineProps<{
 }>()
 defineEmits(['goto'])
 
-const { open, targetRef, toggleOpen } = useToggleOutside()
+const { open, targetRef, toggleOpen } = useToggleOutside(() => {
+  // 滚动到 li[catalog=true] 的位置
+  nextTick(() => {
+    console.log(document.querySelector('li[catalog=true]'))
+    document.querySelector('li[catalog=true]')
+      ?.scrollIntoView({ behavior: 'smooth' })
+  })
+})
 </script>
 
 <template>
@@ -24,7 +31,7 @@ const { open, targetRef, toggleOpen } = useToggleOutside()
           </div>
           <ul m-l-4 inline-block w-20vw>
             <li
-              v-for="(item, idx) in children" :key="idx" inline-block :opacity="`${current === item ? '50' : '100'}`"
+              v-for="(item, idx) in children" :key="idx" inline-block :catalog="current === item" :opacity="`${current === item ? '50' : '100'}`"
               @click="$emit('goto', item)"
             >
               第 {{ idx + 1 }} 小节

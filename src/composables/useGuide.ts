@@ -49,7 +49,7 @@ export function useGuide(type: GuideType) {
     },
   })
 
-  if (guide.value.includes(type)) {
+  if (guide?.value?.includes(type)) {
     nextTick(() => {
       document.body.style.position = 'fixed'
       driver.defineSteps(GuideMap[type])

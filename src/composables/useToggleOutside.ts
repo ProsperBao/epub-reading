@@ -1,4 +1,4 @@
-export function useToggleOutside() {
+export function useToggleOutside(fn?: () => void) {
   const [open, toggleOpen] = useToggle(false)
   const targetRef = ref(null)
   onClickOutside(targetRef, (e) => {
@@ -7,7 +7,10 @@ export function useToggleOutside() {
   })
   return {
     open,
-    toggleOpen,
+    toggleOpen: () => {
+      toggleOpen()
+      open.value && fn?.()
+    },
     targetRef,
   }
 }
