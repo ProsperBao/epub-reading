@@ -83,18 +83,6 @@ export function requestYoudaoTranslate(content: string): Promise<string> {
     .then(result => result.translation[0])
 }
 
-// 请求谷歌翻译
-export function requestGoogleTranslate(): Promise<string> {
-  return fetchJsonp(`https://translate.google.cn/translate_a/single?client=webapp&sl=zh-CN&tl=en&dt=t&q=${encodeURIComponent('你好')}`)
-    .then(respone => respone.json())
-}
-
-// 请求微软翻译
-export function requestMicrosoftTranslate(): Promise<string> {
-  return fetchJsonp(`https://translate.google.cn/translate_a/single?client=webapp&sl=zh-CN&tl=en&dt=t&q=${encodeURIComponent('你好')}`)
-    .then(respone => respone.json())
-}
-
 // 恢复特有名词
 export function recoveryUniqueNoun(content: string, nounMapping: string[]): string {
   let text = content
@@ -119,8 +107,6 @@ export function updateHistory(source: NormalizeStringify, translate: string): No
 
 const translateEngine: Record<TranslateEngine, any> = {
   baidu: requestBaiduTranslate,
-  google: requestGoogleTranslate,
-  microsoft: requestMicrosoftTranslate,
   youdao: requestYoudaoTranslate,
 }
 
@@ -133,8 +119,8 @@ export async function translate(source: NormalizeStringify): Promise<NormalizeSt
   const { use } = useTranslateStore()
   // 剔除注音标签
   let content = convertContent(source.origin)
-  // 转换专有名词，并且返回专有名词对应的翻译
-  ;[content, nounMapping] = convertUniqueNoun(content)
+    // 转换专有名词，并且返回专有名词对应的翻译
+    ;[content, nounMapping] = convertUniqueNoun(content)
   if (!content)
     return source
   // 加载
