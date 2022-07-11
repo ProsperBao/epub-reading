@@ -48,6 +48,8 @@ export function convertUniqueNoun(content: string): [string, string[]] {
 // 请求百度翻译
 export function requestBaiduTranslate(content: string): Promise<string> {
   const { baidu: { appid, secret } } = useTranslateStore()
+  if (!appid || !secret)
+    throw alert('请先配置百度翻译')
   const params: Record<string, string> = {
     appid,
     q: content,
@@ -69,6 +71,8 @@ export function requestYoudaoTranslate(content: string): Promise<string> {
     return q.substring(0, 10) + len + q.substring(len - 10, len)
   }
   const { youdao: { appid: appKey, secret: key } } = useTranslateStore()
+  if (!appKey || !key)
+    throw alert('请先配置有道翻译')
   const params: Record<string, string> = {
     q: content,
     appKey,
