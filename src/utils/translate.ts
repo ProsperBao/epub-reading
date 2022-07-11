@@ -32,6 +32,8 @@ export function convertUniqueNoun(content: string): [string, string[]] {
     const uniqueNoun = list[dict]
     if (uniqueNoun) {
       for (const key in uniqueNoun) {
+        if (!!uniqueNoun[key][0] || !!uniqueNoun[key][1])
+          continue
         if ((new RegExp(uniqueNoun[key][0], 'g')).test(text)) {
           const index = nounMapping.length
           nounMapping.push(uniqueNoun[key][1])

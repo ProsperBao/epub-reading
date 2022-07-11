@@ -10,7 +10,6 @@ defineEmits(['goto'])
 const { open, targetRef, toggleOpen } = useToggleOutside(() => {
   // 滚动到 li[catalog=true] 的位置
   nextTick(() => {
-    console.log(document.querySelector('li[catalog=true]'))
     document.querySelector('li[catalog=true]')
       ?.scrollIntoView({ behavior: 'smooth' })
   })

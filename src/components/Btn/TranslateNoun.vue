@@ -5,6 +5,15 @@ const { open, targetRef, toggleOpen } = useToggleOutside()
 
 const nounStore = useUniqueNounStore()
 const active = ref<string>(nounStore.use[0])
+
+function addCurrentNoneLine() {
+  nounStore.list[active.value].push(['', ''])
+  nextTick(() => document.querySelector(`tr[idx="${nounStore.list[active.value].length - 1}"]`)
+    ?.scrollIntoView({ behavior: 'smooth' }))
+}
+function removeCurrentNoneLine(idx: number) {
+  nounStore.list[active.value].splice(idx, 1)
+}
 </script>
 
 <template>
@@ -28,26 +37,33 @@ const active = ref<string>(nounStore.use[0])
         <div mt-2>
           <table w-full text-center>
             <tr>
-              <td border w="50%" p-1>
+              <td border w="45%" p-1>
                 名词
               </td>
-              <td border w="50%" p-1>
+              <td border w="45%" p-1>
                 翻译
               </td>
+              <td border w="10%" p-1 />
             </tr>
           </table>
           <div h-50 overflow-y-scroll>
             <table w-full text-center border-t-none>
-              <tr v-for="noun in nounStore.list[active]" :key="noun[0]">
-                <td border border-t-none w="50%">
-                  <input v-model="noun[0]" w-full outline-none p-x-2 type="text">
+              <tr v-for="(noun, idx) in nounStore.list[active]" :key="noun[0]" :idx="idx">
+                <td border border-t-none w="45%">
+                  <input v-model="noun[0]" w-full outline-none p-x-2 type="text" placeholder="修改名词">
                 </td>
-                <td border border-t-none w="50%">
-                  <input v-model="noun[1]" w-full outline-none p-x-2 type="text">
+                <td border border-t-none w="45%">
+                  <input v-model="noun[1]" w-full outline-none p-x-2 type="text" placeholder="修改翻译">
+                </td>
+                <td border border-t-none w="45%">
+                  <div i-carbon-trash-can m-x-auto @click="removeCurrentNoneLine(idx)" />
                 </td>
               </tr>
             </table>
           </div>
+          <button w-full mt-2 text-center border border-rd @click="addCurrentNoneLine">
+            + 添加
+          </button>
         </div>
       </section>
     </Transition>
