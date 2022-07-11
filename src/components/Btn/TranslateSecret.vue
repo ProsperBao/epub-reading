@@ -54,7 +54,7 @@ const t = async () => {
       <h5 text-left font-600 pl-2 pt-2 pb-2>
         翻译密钥管理
       </h5>
-      <nav flex justify-around>
+      <nav flex gap-2>
         <button v-for="engine in TRANSLATE_ENGINE" :key="engine" class="btn" transition-all-300 :class="{ active: engine === active }" @click="active = engine">
           {{ engine }}
         </button>

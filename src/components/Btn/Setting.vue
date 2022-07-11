@@ -1,16 +1,11 @@
 <script lang="ts" setup>
 import { useToggleOutside } from '~/composables/useToggleOutside'
-import { useHistoryStore, useReadingStore, useUniqueNounStore } from '~/stores'
+import { useReadingStore, useUniqueNounStore } from '~/stores'
 const { open, targetRef, toggleOpen } = useToggleOutside()
 // 清理缓存
 const { reset } = useUniqueNounStore()
-const history = useHistoryStore()
 const resetNoun = () => {
   reset()
-  alert('清理完成')
-}
-const resetHistory = () => {
-  history.record = {}
   alert('清理完成')
 }
 // 字体相关
@@ -39,9 +34,7 @@ const operateReading = (attr: 'height' | 'size', type: 'add' | 'sub') => {
         <button class="btn" @click="resetNoun">
           清理翻译历史
         </button>
-        <button class="btn" @click="resetHistory">
-          清理特有名词
-        </button>
+        <TranslateNoun />
       </div>
       <h5 text-left font-600 p-l-2 p-t-2>
         字体管理

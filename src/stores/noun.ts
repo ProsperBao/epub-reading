@@ -3,7 +3,7 @@ import { defineStore } from 'pinia'
 // 特有名词列表
 export type UniqueNounList = Record<string, UniqueNounMap>
 // 特有名词映射
-export type UniqueNounMap = Record<string, string>
+export type UniqueNounMap = [string, string][]
 
 // 特有名词
 export const useUniqueNounStore = defineStore('noun', () => {
@@ -15,12 +15,13 @@ export const useUniqueNounStore = defineStore('noun', () => {
     list.value = Object.entries(import.meta.globEager('~/noun/*.json')).reduce((acc, [key, value]) => {
       const name = key.split('/').pop()?.replace('.json', '')
       if (name)
-        acc[name] = value.default
+        acc[name] = Object.entries<string>(value.default)
 
       return acc
     }, {} as UniqueNounList)
   }
-  initList()
+  // 第一次初始化
+  Object.keys(list.value).length === 0 && initList()
 
   return {
     use,
